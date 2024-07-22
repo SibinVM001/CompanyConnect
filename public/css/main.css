@@ -1,3 +1,19 @@
 .logo {
     width: 50px;
 }
+
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 10px !important;
+}
+
+.table td { 
+    align-content: center !important;
+}
+
+.view-logo {
+    width: 80px;
+}
+
+.view-logo img {
+    width: 100%;
+}

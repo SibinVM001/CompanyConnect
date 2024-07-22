@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\{Company, Employee};
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $companiesCount = Company::count();
+        $employeesCount = Employee::count();
+
+        return view('dashboard', compact('companiesCount', 'employeesCount'));
     }
 }
