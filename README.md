@@ -58,6 +58,6 @@ delete the companies and employees under that company. Also there is an Api for 
     - Error Response:
         - Code: 401
         - Content: {
-            "error": "Unauthorized"
+            "error": "Unauthenticated"
         }
 
