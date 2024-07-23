@@ -37,8 +37,8 @@ delete the companies and employees under that company. Also there is an Api for 
     }
     - Success Response:
         - Code: 200
-        - Content: ```<pre>[
-            {
+        - Content: <pre>[
+            <pre>{
                 "id": 1,
                 "first_name": "test",
                 "last_name": "employee",
@@ -51,8 +51,8 @@ delete the companies and employees under that company. Also there is an Api for 
                     "logo": "{base_url}/company/logo/1721671895_xrBpbDTCqo_benz_logo.png",
                     "website": "http://www.google.com"
                 }
-            }
-        ]</pre>```
+            }</pre>
+        ]</pre>
     - Error Response:
         - Code: 401
         - Content: {
