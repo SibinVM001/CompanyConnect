@@ -7,5 +7,7 @@ delete the companies and employees under that company. Also there is an Api for 
 
 ## Company Connect Api's
 
-- [Login: {base_url}/v1/login]
+- Login: 
+    - Url: {base_url}/v1/login
+    - Method: POST
 
