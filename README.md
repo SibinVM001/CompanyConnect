@@ -10,31 +10,31 @@ delete the companies and employees under that company. Also there is an Api for 
     - Endpoint: /v1/login
     - Method: POST,
     - Description: Retrieve authenticated user token.
-    - Headers: {
+    - Headers: <pre>{
         Accept: application/json
-    }
-    - Body Params (JSON) : {
+    }</pre>
+    - Body Params (JSON) : <pre>{
         "email": "admin@admin.com",
         "password": password"
-    }
+    }</pre>
     - Success Response:
         - Code: 200
-        - Content: {
+        - Content: <pre>{
             "token": "1|pdAagPqaQxHoPRmEv8muFVdy5xaaI3cHBs978Ozy"
-        }
+        }</pre>
     - Error Response:
         - Code: 401
-        - Content: {
+        - Content: <pre>{
             "error": "You are not authorized to access this Api"
-        }
+        }</pre>
 - Employees Details: 
     - Endpoint: /v1/employees
     - Method: GET,
     - Description: Retrieve all employees data after successful login.
     - Authorization: Bearer token
-    - Headers: {
+    - Headers: <pre>{
         Accept: application/json
-    }
+    }</pre>
     - Success Response:
         - Code: 200
         - Content: <pre>[
@@ -55,7 +55,7 @@ delete the companies and employees under that company. Also there is an Api for 
         ]</pre>
     - Error Response:
         - Code: 401
-        - Content: {
+        - Content: <pre>{
             "error": "Unauthenticated"
-        }
+        }</pre>
 
