@@ -37,7 +37,7 @@ delete the companies and employees under that company. Also there is an Api for 
     }
     - Success Response:
         - Code: 200
-        - Content: ```[
+        - Content: ```<pre>[
             {
                 "id": 1,
                 "first_name": "test",
@@ -52,7 +52,7 @@ delete the companies and employees under that company. Also there is an Api for 
                     "website": "http://www.google.com"
                 }
             }
-        ]```
+        ]</pre>```
     - Error Response:
         - Code: 401
         - Content: {
