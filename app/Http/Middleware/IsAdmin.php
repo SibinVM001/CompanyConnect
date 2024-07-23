@@ -20,9 +20,15 @@ class IsAdmin
         if (Auth::user()->is_admin) {
             return $next($request);
         } else {
-            Auth::logout();
-        }
+            if (!$request->expectsJson()) {
+                Auth::logout();
+                
+                return redirect()->route('login')->with('unauthorized', 'You are not authorized to access this page.');
+            } else {
+                $request->user()->currentAccessToken()->delete();
 
-        return redirect()->route('login')->with('unauthorized', 'You are not authorized to access this page.');
+                return response()->json(['message' => 'You are not authorized to access this Api.']);
+            }
+        }
     }
 }

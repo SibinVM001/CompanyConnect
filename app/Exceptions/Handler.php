@@ -54,7 +54,11 @@ class Handler extends ExceptionHandler
         }
 
         if ($exception instanceof NotFoundHttpException) {
-            return redirect()->route('login');
+            if (!$request->expectsJson()) {
+                return redirect()->route('login');
+            } else {
+                return response()->json(['error' => 'Not found!'], 404);
+            }
         }
 
         return parent::render($request, $exception);

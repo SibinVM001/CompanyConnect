@@ -63,6 +63,7 @@
                     },
                     { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
+                pageLength: 10,
                 rowCallback: function(row, data, index) {
                     $('td:eq(0)', row).html(table.page.info().start + index + 1);
                 }

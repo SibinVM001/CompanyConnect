@@ -21,9 +21,11 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $companies = Company::select(['id', 'logo', 'name', 'email', 'website']);
+            $companies = Company::select(['id', 'logo', 'name', 'email', 'website'])->paginate(10);
 
-            return DataTables::of($companies)
+            $data = collect($companies->items());
+
+            return DataTables::of($data)
                         ->addColumn('action', function($row) {
                             $viewBtn = '<a href="' . route("companies.show", $row->id). '" class="show btn btn-secondary">View</a>';
                             $editBtn = '<a href="' . route("companies.edit", $row->id). '" class="edit btn btn-success mx-2">Edit</a>';
@@ -43,6 +45,10 @@ class CompanyController extends Controller
 
                             return $img;
                         })
+                        ->with([
+                            'recordsTotal' => $companies->total(),
+                            'recordsFiltered' => $companies->total()
+                        ])
                         ->rawColumns(['action', 'logo'])
                         ->make(true);
         }

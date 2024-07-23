@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Constants\FileDestinations;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Http\Requests\EmployeeRequest;
@@ -20,16 +21,17 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $employees = Employee::select(['id', 'first_name', 'last_name', 'email', 'phone', 'company'])->with('employer');
+            $employees = Employee::select(['id', 'first_name', 'last_name', 'email', 'phone', 'company'])->with('employer')->paginate(10);;
 
-            return DataTables::of($employees)
+            $data = collect($employees->items());
+
+            return DataTables::of($data)
                         ->addColumn('company', function($row) {
                             return $row->employer->name;
                         })
                         ->addColumn('action', function($row) {
                             $viewBtn = '<a href="' . route("employees.show", $row->id). '" class="show btn btn-secondary">View</a>';
                             $editBtn = '<a href="' . route("employees.edit", $row->id). '" class="edit btn btn-success mx-2">Edit</a>';
-                            // $deleteBtn = ' <a href="' . route("employees.destroy", $row->id). '" class="delete btn btn-danger">Delete</a>';
                             $deleteBtn = '<form action="' . route("employees.destroy", $row->id) . '" method="POST">'
                                             . '<input type="hidden" name="_method" value="DELETE">'
                                             . '<input type="hidden" name="_token" value="' . csrf_token() .'">'
@@ -39,6 +41,10 @@ class EmployeeController extends Controller
                             return '<div class="d-inline-flex">' .  $viewBtn . $editBtn . $deleteBtn . '</div>';
                         })
                         ->rawColumns(['action'])
+                        ->with([
+                            'recordsTotal' => $employees->total(),
+                            'recordsFiltered' => $employees->total()
+                        ])
                         ->make(true);
         }
 
@@ -155,5 +161,39 @@ class EmployeeController extends Controller
         }
 
         return redirect()->route('employees.index');
+    }
+
+    public function getEmployees()
+    {
+        $response = [];
+        $employees = Employee::all();
+
+        if (!empty($employees)) {
+            $response = $employees->map(function ($employee) {
+                $logo = ((isset($employee->employer->logo) && file_exists(FileDestinations::COMPANY_LOGO . $employee->employer->logo)) ? 
+                        asset(FileDestinations::COMPANY_LOGO . $employee->employer->logo) : asset(FileDestinations::NO_IMAGE));
+
+                return [
+                    'id' => $employee->id,
+                    'first_name' => $employee->first_name,
+                    'last_name' => $employee->last_name,
+                    'email' => $employee->email,
+                    'phone' => $employee->phone,
+                    'company_details' => [
+                        'id' => $employee->employer->id,
+                        'name' => $employee->employer->name,
+                        'email' => $employee->employer->email,
+                        'logo' => $logo,
+                        'website' => $employee->employer->website,
+                    ]
+                ];
+            });
+        }
+
+        if (!$response) {
+            return response()->json(['error' => 'Employee details not found'], 404);
+        }
+
+        return response()->json($response);
     }
 }
