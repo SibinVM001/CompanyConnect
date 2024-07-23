@@ -11,7 +11,7 @@ delete the companies and employees under that company. Also there is an Api for 
     - Method: POST,
     - Description: Retrieve authenticated user token.
     - Headers: <pre>{
-        <pre>Accept: application/json</pre>
+        Accept: application/json
     }</pre>
     - Body Params (JSON) : <pre>{
         "email": "admin@admin.com",
@@ -32,9 +32,9 @@ delete the companies and employees under that company. Also there is an Api for 
     - Method: GET,
     - Description: Retrieve all employees data after successful login.
     - Authorization: Bearer token
-    - Headers: <pre>{
+    - Headers: <pre>```{
         Accept: application/json
-    }</pre>
+    }```</pre>
     - Success Response:
         - Code: 200
         - Content: <pre>[
